@@ -1,29 +1,25 @@
+import Header from "./components/Header.jsx";
+import FeedbackList from "./components/FeedbackList.jsx";
+import FeedbackData from "./data/FeedbackData.js";
 import React from 'react';
+import {useState} from 'react';
 
 function App() {
 
-    const title = "Welcome to my first app";
-    const body = "cool beans is my favourite";
-    const comments = [
-        {id : 1, text : 'Comment one'},
-        {id : 2, text : 'Comment two'},
-    ]
+    const [feedback, setFeedback] = useState(FeedbackData)
+
+    const deleteFeedback = (id) => {
+        if(window.confirm('Are you sure you want to delete this?')){
+            setFeedback(feedback.filter((item) => item.id !== id)); // prop drilling lesson(last part)
+        }
+    }
     return (
-        <div className = 'container'>
-        <h1>{title.toUpperCase()}</h1>
-        <p>{body}</p>
-
-        <div className= 'comments'>
-            <h3>Comments ( {comments.length} )</h3>
-
-            <ul>
-                {comments.map((comment,index) => {
-                    return <li key={index}> {comment.text} </li>
-                })}
-            </ul>
+        <>
+        <Header bgColor='rgba(0,0,0,0.4)' textColor='#ff6a95' />
+        <div className="container">
+            <FeedbackList feedback={feedback} handleDelete={deleteFeedback}/>
         </div>
-
-        </div>
+        </>
     )
 }
 
